@@ -46,7 +46,7 @@ namespace _02_Challenge
                         DisplayQueue();
                         break;
                     case 3:
-                        RemoveClaimFromQueue();
+                        NextClaim();
                         break;
             //        case 4:
              //           NextClaim();
@@ -109,36 +109,69 @@ namespace _02_Challenge
             
                 foreach (Claim newClaim in _claim)
             {
-                Console.WriteLine($"{newClaim.ClaimID}/t        {newClaim.ClaimType}/t     {newClaim.Description}/t    {newClaim.ClaimAmount}/t   {newClaim.DOIncident.ToShortDateString()}/t     {newClaim.DOClaim.ToShortDateString()}\t     {newClaim.IsValid}");
+                Console.WriteLine($"{newClaim.ClaimID}        {newClaim.ClaimType}     {newClaim.Description}    {newClaim.ClaimAmount}   {newClaim.DOIncident.ToShortDateString()}     {newClaim.DOClaim.ToShortDateString()}     {newClaim.IsValid}");
             }
 
         }
-        private void RemoveClaimFromQueue()
+        private void NextClaim()
         {
-            Console.Clear();
-            _claimRepo.GetQueue();
+            Claim claim = _claimRepo.NextClaim();
 
-            Console.WriteLine("Which claim would you like to remove?  Enter claim ID number and press enter.");
-            int claimID = int.Parse(Console.ReadLine());
+            Console.WriteLine($"{claim.ClaimID} {claim.ClaimType} {claim.Description} {claim.ClaimAmount}  {claim.DOIncident.ToShortDateString()} {claim.DOClaim.ToShortDateString()}  {claim.IsValid}");
 
-            ClaimType claimType = ClaimType.Car;
-            string description = "any";
-            decimal claimAmount = 0m;
-            DateTime dOIncident = default(DateTime);
-            DateTime dOClaim = default(DateTime);
+            Console.WriteLine("Would you like to work on this claim?\n" +
+                "1. Yes\n" +
+                "2. No\n");
 
-            bool success = _claimRepo.RemoveClaimByData(claimID, claimType, description, claimAmount, dOIncident, dOClaim);
-            if (success == true)
+            int input = int.Parse(Console.ReadLine());
+            if(input == 1)
             {
-                Console.WriteLine($"Claim #{claimID} has been removed.");
-                Console.ReadKey();
+                _claimRepo.RemoveClaimFromQueue();
             }
-            else
-            {
-                Console.WriteLine($"Claim #{claimID} was unable to be removed at this time.");
-                Console.ReadKey();
-                Console.Clear();
-            }
+
         }
+        
+        //private void RemoveClaimFromQueue()
+        //{
+        //    Console.Clear();
+        //    _claimRepo.GetQueue();
+
+        //    Console.WriteLine("Which claim would you like to remove? Enter claimID of claim to be removed.");
+        //    int claim = int.Parse(Console.ReadLine());
+
+        //    _claimRepo.RemoveClaimByData(claim);
+
+        //    Console.WriteLine($"The {claim} was successfully removed.");
+        //    Console.ReadKey();
+
+        //    Console.Clear();
+        //    Run();
+        //}
+        //{
+        //    Console.Clear();
+        //    _claimRepo.GetQueue();
+
+        //    Console.WriteLine("Which claim would you like to remove?  Enter claim ID number and press enter.");
+        //    int claimID = int.Parse(Console.ReadLine());
+
+        //    ClaimType claimType = ClaimType.Car;
+        //    string description = "any";
+        //    decimal claimAmount = 0m;
+        //    DateTime dOIncident = default(DateTime);
+        //    DateTime dOClaim = default(DateTime);
+
+        //    bool success = _claimRepo.RemoveClaimByData(claimID, claimType, description, claimAmount, dOIncident, dOClaim);
+        //    if (success == true)
+        //    {
+        //        Console.WriteLine($"Claim #{claimID} has been removed.");
+        //        Console.ReadKey();
+        //    }
+        //    else
+        //    {
+        //        Console.WriteLine($"Claim #{claimID} was unable to be removed at this time.");
+        //        Console.ReadKey();
+        //        Console.Clear();
+        //    }
+        //}
     }
 }

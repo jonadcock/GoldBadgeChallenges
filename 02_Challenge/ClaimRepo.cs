@@ -20,28 +20,43 @@ namespace _02_Challenge
         {
             return _claim;
         }
-        public void RemoveClaimFromQueue(Claim claim)
+        public void RemoveClaimFromQueue()
         {
             _claim.Dequeue();
         }
-
-        public bool RemoveClaimByData(int claimID, ClaimType claimType, string description, decimal claimAmount, DateTime dOIncident, DateTime dOClaim)
-        {
-      
-            foreach(Claim claim in _claim)
-            {
-                if(claim.ClaimID == claimID)
-                {
-                    RemoveClaimFromQueue(claim);
-                    break;
-                }
-            }
-        }
         public Claim NextClaim()
         {
-            Claim firstClaim = _claim.Peek();
-            return firstClaim;
+            Claim claim = _claim.Peek();
+            return claim;
         }
-        
+
+        //public void RemoveClaimByData(int claimID)
+        //{
+        //    foreach(Claim claim in _claim)
+        //    {
+        //        if (claim.ClaimID == claimID) ;
+        //        break;
+        //    }
+        //}
+
+        //public bool RemoveClaimByData(int claimID, ClaimType claimType, string description, decimal claimAmount, DateTime dOIncident, DateTime dOClaim)
+        //{
+
+        //    foreach(Claim claim in _claim)
+        //    {
+        //        if(claim.ClaimID == claimID)
+        //        {
+        //            RemoveClaimFromQueue(claim);
+        //            break;
+        //        }
+        //    }
+        //}
+        //    public Claim NextClaim()
+        //    {
+        //        Claim firstClaim = _claim.Peek();
+        //        return firstClaim;
+        //    }
+
+        //}
     }
 }
